@@ -1,51 +1,28 @@
-# SD Prompt Assembler
+import re
 
-A lightweight desktop project for managing Stable Diffusion and AI art prompts.
+from src.scraper import normalize_tag, _collect_from_html
 
-## Features
 
-- create and edit prompt text files locally
-- save and reload prompt files in the app
-- scrape tags from imageboard URLs
-- merge extracted tags into your prompt text
-- keep a small local library of prompt files
+def test_normalize_tag_basic():
+    assert normalize_tag("  Hello World!  ") == "hello_world"
+    assert normalize_tag("twin_tails") == "twin_tails"
+    assert normalize_tag("meta") == ""
 
-## Setup
 
-1. Open the repository in VS Code.
-2. Create/select a Python interpreter.
-3. Install dependencies:
-
-```bash
-python -m venv .venv
-.venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -r requirements.txt
-```
-
-On Windows PowerShell:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\python.exe -m pip install --upgrade pip
-.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-## Run the app
-
-```bash
-python app.py
-```
-
-## Project layout
-
-- `app.py` — app entry point
-- `src/scraper.py` — tag extraction logic
-- `src/prompt_manager.py` — Tkinter desktop UI
-- `data/prompts/` — saved prompt text files
-- `tests/` — smoke tests for the scraper
-
-## Notes
-
-- The scraper works best on pages that expose tags in reliable HTML attributes or link metadata.
-- Some imageboard layouts require custom parsing.
-- Respect site terms and robots policies when scraping.
+def test_collect_from_html_works_for_keywords_and_tag_links():
+    sample = """
+    <html>
+      <head>
+        <meta name="keywords" content="maid, blue eyes, schoolgirl" />
+      </head>
+      <body>
+        <a href="/tags/maid?foo=bar">Maid</a>
+        <div class="tag">blue eyes</div>
+        <span data-tag-name="schoolgirl">schoolgirl</span>
+      </body>
+    </html>
+    """
+    tags = _collect_from_html(sample)
+    assert "maid" in tags
+    assert "blue_eyes" in tags
+    assert "schoolgirl" in tags

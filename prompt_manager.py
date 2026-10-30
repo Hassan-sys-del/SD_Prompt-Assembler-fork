@@ -9,6 +9,5 @@ except ImportError:
         sys.path.insert(0, str(src_dir))
     from prompt_manager import main
 
-
 if __name__ == "__main__":
     main()
