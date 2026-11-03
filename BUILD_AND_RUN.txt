@@ -1,0 +1,66 @@
+SD PROMPT ASSEMBLER — LOCAL BUILD AND RUN INSTRUCTIONS
+======================================================
+
+This repository includes a React + TypeScript frontend and the existing Python/Tkinter application. Follow the relevant section below.
+
+REACT + TYPESCRIPT FRONTEND
+---------------------------
+Prerequisites:
+- Node.js (LTS recommended), which includes npm
+- Git (if you are cloning the repository)
+
+1. Clone the repository and enter its folder:
+
+   git clone https://github.com/Hassan-sys-del/SD_Prompt-Assembler-fork.git
+   cd SD_Prompt-Assembler-fork
+
+2. Install frontend dependencies:
+
+   npm install
+
+3. Start the local development server:
+
+   npm run dev
+
+4. Open the local URL printed by Vite in your browser (usually http://localhost:5173).
+   Stop the server with Ctrl+C in the terminal.
+
+Create and check a production build:
+
+   npm run build
+
+Vite writes the production files to the dist/ directory. To preview that build locally:
+
+   npm run preview
+
+PYTHON / TKINTER APPLICATION
+----------------------------
+Prerequisites:
+- Python 3.9 or newer
+- Tkinter (usually included with Python; some Linux distributions provide it separately)
+
+1. Create and activate a virtual environment:
+
+   Windows PowerShell:
+     python -m venv .venv
+     .venv\Scripts\Activate.ps1
+
+   macOS/Linux:
+     python3 -m venv .venv
+     source .venv/bin/activate
+
+2. Install Python dependencies:
+
+   python -m pip install --upgrade pip
+   python -m pip install -r requirements.txt
+
+3. Start the desktop app from the repository root:
+
+   python app.py
+
+TROUBLESHOOTING
+---------------
+- If npm is not found, install Node.js LTS and restart your terminal.
+- If the Python app reports that tkinter is missing on Linux, install your distribution's Tkinter package (commonly python3-tk), then retry.
+- The React frontend persists its browser-side data in localStorage. It does not directly write to the Python app's local data files.
+- The Python app and the browser frontend are separate implementations; run the one you want to use.
